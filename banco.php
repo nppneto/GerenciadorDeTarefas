@@ -56,7 +56,7 @@ function gravar_tarefas($_conn, $tarefa) {
 function buscar_tarefa($_conn, $id) {
     $sqlBusca = "SELECT * FROM tarefas WHERE id = $id";
 
-    // var_dump($sqlBusca);
+    var_dump($sqlBusca);
 
     $resultado = mysqli_query($_conn, $sqlBusca);
 

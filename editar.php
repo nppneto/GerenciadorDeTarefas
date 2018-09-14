@@ -12,7 +12,7 @@ if(array_key_exists('nome', $_POST) && $_POST['nome'] != '') {
 
     $tarefa = [];
 
-    $tarefa['id'] = $_POST['id'];
+    $tarefa['id'] = $_GET['id'];
 
     $tarefa['nome'] = $_POST['nome'];
     
@@ -49,7 +49,7 @@ if(array_key_exists('nome', $_POST) && $_POST['nome'] != '') {
 }
 
 
-$tarefa = buscar_tarefa($conn, $_POST['id']);
+$tarefa = buscar_tarefa($conn, $_GET['id']);
 
 require "template.php";
 
