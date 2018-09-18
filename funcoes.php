@@ -31,7 +31,11 @@ function traduz_data_para_banco($data) {
         return "";
     }
 
-    // $dados = explode('/', $data);
+    $partes = explode('/', $data);
+
+    if(count($partes) != 3) {
+        return $data;
+    }
 
     // $data_banco = "{$dados[2]}-{$dados[1]}-{$dados[0]}";
 
@@ -39,9 +43,7 @@ function traduz_data_para_banco($data) {
 
     $objeto_data = DateTime::createFromFormat('d/m/Y', $data);
 
-    $data_banco = $objeto_data->format('Y-m-d');
-
-    return $data_banco;
+    return $objeto_data->format('Y-m-d');
 }
 
 function traduz_data_para_exibir($data) {
@@ -49,7 +51,11 @@ function traduz_data_para_exibir($data) {
         return "";
     } 
 
-    // $dados = explode('-', $data);
+    $partes = explode("-", $data);
+
+    if(count($partes) != 3) {
+        return $data;
+    }
 
     // $data_tela = "{$dados[2]}/{$dados[1]}/{$dados[0]}";
 
@@ -57,16 +63,14 @@ function traduz_data_para_exibir($data) {
 
     $objeto_data = DateTime::createFromFormat('Y-m-d', $data);
 
-    $resultado = '';
+    return $objeto_data->format('d/m/Y');
 
-    if($regiao == 'EUA') {
-        $resultado = $objeto_data->format('Y/m/d');
-    }
-    else {
-        $resultado = $objeto_data->format('d/m/Y');
-    }
-
-    return $resultado;
+    // if($regiao == 'EUA') {
+    //     $resultado = $objeto_data->format('Y/m/d');
+    // }
+    // else {
+    //     $resultado = $objeto_data->format('d/m/Y');
+    // }
 }
 
 function tem_post() {
@@ -75,4 +79,25 @@ function tem_post() {
     }
     
     return false;
+}
+
+function validar_data($data) {
+    $padrao = '/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/';
+    $resultado = preg_match($padrao, $data);
+
+    if($resultado == 0) {
+        return false;
+    }
+
+    $dados = explode("/", $data);
+
+    $dia = $dados[0];
+    $mes = $dados[1];
+    $ano = $dados[2];
+
+    $resultado = checkdate($mes, $dia, $ano);
+
+    // checkdate retorna true/false... o retorno será o resultado da comparação entre checkdate e 1
+    // 0 = false ------ 1 = true;
+    return ($resultado == 1);
 }

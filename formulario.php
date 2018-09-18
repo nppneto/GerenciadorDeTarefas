@@ -5,7 +5,7 @@
         <label for="">
         Tarefa:
         <!-- Mostrando erros na validação do campo nome -->
-        <?php if($tem_erros && array_key_exists('nome', $erros_validacao)) : ?>
+        <?php if(isset($tem_erros) && array_key_exists('nome', $erros_validacao)) : ?>
             <span class="erro">
                 <?php echo $erros_validacao['nome']; ?>
             </span>
@@ -20,7 +20,12 @@
         </label>
         <label for="">
             Prazo (Opcional):
-            <input type="text" name="prazo" value="<?= traduz_data_para_exibir($tarefa['prazo']); ?>" />
+            <?php if(isset($tem_erros) && array_key_exists('prazo', $erros_validacao)) : ?>
+                <span class="erro">
+                    <?php echo $erros_validacao['prazo']; ?>
+                </span>
+            <?php endif; ?>
+            <input type="text" name="prazo" value="<?= $tarefa['prazo']; ?>" />
         </label>
         <fieldset>
             <legend>Prioridade:</legend>

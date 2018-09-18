@@ -1,7 +1,7 @@
 <?php
 
- $host = 'localhost';
- $user = 'developer';
+ $host = '127.0.0.1';
+ $user = 'root';
  $pass = 'vertrigo';
  $db = 'tarefas';
 
@@ -20,7 +20,10 @@ if(mysqli_connect_errno($conn)) {
 
 function buscar_tarefas($_conn) {
     $sqlBusca = "SELECT * FROM tarefas";
+    // var_dump($sqlBusca);
     $resultado = mysqli_query($_conn, $sqlBusca);
+
+    // var_dump($resultado);
 
     $tarefas = [];
 
@@ -56,7 +59,7 @@ function gravar_tarefas($_conn, $tarefa) {
 function buscar_tarefa($_conn, $id) {
     $sqlBusca = "SELECT * FROM tarefas WHERE id = $id";
 
-    var_dump($sqlBusca);
+    // var_dump($sqlBusca);
 
     $resultado = mysqli_query($_conn, $sqlBusca);
 

@@ -32,9 +32,13 @@ if(tem_post()) {
         $tarefa['descricao'] = '';
     }
 
-    if(array_key_exists('prazo', $_POST)) {
-        $tarefa['prazo'] = traduz_data_para_banco($_POST['prazo']);
-        
+    if(array_key_exists('prazo', $_POST) && strlen($_POST['prazo']) > 0) {
+        if(validar_data($_POST['prazo'])) {
+            $tarefa['prazo'] = traduz_data_para_banco($_POST['prazo']);
+        } else {
+            $tem_erros = true;
+            $erros_validacao['prazo'] = 'O prazo não é uma data válida';
+        }       
     }
     else {
         $tarefa['prazo'] = '';
@@ -58,10 +62,20 @@ if(tem_post()) {
     
 }
 
+
 // if (isset($_SESSION['listaTarefas'])) {
 //     $listaTarefas = $_SESSION['listaTarefas'];
 //     echo 'oi';
 // }
+
+$tarefa = [
+    'id' => 0,
+    'nome' => (array_key_exists('nome', $_POST)) ? $_POST['nome'] : '',
+    'descricao' => (array_key_exists('descricao', $_POST)) ? $_POST['descricao'] : '',
+    'prazo' => (array_key_exists('prazo', $_POST)) ? $_POST['prazo'] : '',
+    'prioridade' => (array_key_exists('prioridade', $_POST)) ? $_POST['prioridade'] : 1,
+    'concluida' => (array_key_exists('concluida', $_POST)) ? $_POST['concluida'] : ''
+];
 
 $listaTarefas = buscar_tarefas($conn);
 
