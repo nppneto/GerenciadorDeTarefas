@@ -8,7 +8,7 @@
     <title>Gerenciador de Tarefas</title>
 </head>
 <body>
-    <div class="detalhes">
+    <div>
         <h1>Tarefa: <?php echo $tarefa['nome']; ?> </h1>
         <p>
             <a href="tarefas.php">
