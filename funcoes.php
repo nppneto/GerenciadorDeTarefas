@@ -101,3 +101,20 @@ function validar_data($data) {
     // 0 = false ------ 1 = true;
     return ($resultado == 1);
 }
+
+function tratar_anexo($anexo) {
+    $padrao = '/^.+(\.pdf|\.zip)$/';
+    // preg_match retorna true ou false
+    $resultado = preg_match($padrao, $anexo['name']);
+
+    if($resultado == 0) {
+        return false;
+    }
+
+    move_uploaded_file(
+        $anexo['tmp_name'],
+        "anexos/{$anexo['name']}"
+    );
+
+    return true;
+}

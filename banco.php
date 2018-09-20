@@ -1,7 +1,7 @@
 <?php
 
  $host = '127.0.0.1';
- $user = 'developer';
+ $user = 'root'; // unimes = 'root' ---> helbor = 'developer'
  $pass = 'vertrigo';
  $db = 'tarefas';
 
@@ -19,9 +19,9 @@ if(mysqli_connect_errno($conn)) {
 //mysqli_select_db($conn);
 
 function buscar_tarefas($_conn) {
-    $sqlBusca = "SELECT * FROM tarefas";
+    $sqlBuscar = "SELECT * FROM tarefas";
     // var_dump($sqlBusca);
-    $resultado = mysqli_query($_conn, $sqlBusca);
+    $resultado = mysqli_query($_conn, $sqlBuscar);
 
     // var_dump($resultado);
 
@@ -57,11 +57,11 @@ function gravar_tarefas($_conn, $tarefa) {
 }
 
 function buscar_tarefa($_conn, $id) {
-    $sqlBusca = "SELECT * FROM tarefas WHERE id = $id";
+    $sqlBuscar = "SELECT * FROM tarefas WHERE id = $id";
 
     // var_dump($sqlBusca);
 
-    $resultado = mysqli_query($_conn, $sqlBusca);
+    $resultado = mysqli_query($_conn, $sqlBuscar);
 
     // var_dump(mysqli_fetch_all($resultado));
 
@@ -87,5 +87,51 @@ function remover_tarefa($_conn, $id) {
     $sqlRemover = "DELETE FROM tarefas WHERE id = $id";
 
     mysqli_query($_conn, $sqlRemover);
+}
+
+function gravar_anexo($conn, $anexo) {
+    $sqlGravar = "INSERT INTO anexos
+        (tarefa_id, nome, arquivo)
+        VALUES
+        (
+            '{$anexo['tarefa_id']}',
+            '{$anexo['nome']}',
+            '{$anexo['arquivo']}'
+        )
+    ";
+
+    mysqli_query($conn, $sqlGravar);
+}
+
+function buscar_anexos($conn, $tarefa_id) {
+    $sqlBuscar = "SELECT * FROM anexos
+        WHERE tarefa_id = {$tarefa_id}";
+
+    
+    // var_dump($sqlBuscar);
+
+    $resultado = mysqli_query($conn, $sqlBuscar);
+
+    $anexos = [];
+
+    while($anexo = mysqli_fetch_assoc($resultado)) {
+        $anexos[] = $anexo;
+    }
+
+    // var_dump($anexos);
+
+    return $anexos;
+}
+
+function buscar_anexo($conn, $id) {
+    $sqlBuscar = "SELECT * FROM anexos WHERE id = $id";
+    $resultado = mysqli_query($conn, $sqlBuscar);
+
+    return mysqli_fetch_assoc($resultado);
+}
+
+function remover_anexo($conn, $id) {
+    $sqlRemover = "DELETE FROM anexos WHERE id = $id";
+    mysqli_query($conn, $sqlRemover);
 }
 

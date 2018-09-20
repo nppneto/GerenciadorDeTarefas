@@ -35,7 +35,50 @@
         <h2>Anexos</h2>
         <!-- lista de anexos -->
 
+        <?php if(count($anexos) > 0) : ?>
+            <table>
+                <tr>
+                    <th>Arquivos</th>
+                    <th>Opções</th>
+                </tr>
+
+                <?php foreach ($anexos as $anexo) : ?>
+                    <tr>
+                        <td><?php echo $anexo['nome']; ?></td>
+                        <td>
+                            <a href="anexos/<?php echo $anexo['arquivo']; ?>">Download</a>
+                            <a href="remover_anexo.php?id=<?php echo $anexo['id']; ?>">Remover</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+
+            </table>
+
+        <?php else : ?>
+            <p>Não há anexos para esta tarefa</p>
+        <?php endif; ?>
+
         <!-- formulário para um novo anexo -->
+        <form action="" method="POST" enctype="multipart/form-data">
+            <fieldset>
+                <legend>Novo Anexo</legend>
+
+                <input type="hidden" name="tarefa_id" value="<?php echo $tarefa['id']; ?>"/>
+
+                <label for="">
+                    <?php if($tem_erros & array_key_exists('anexo', $erros_validacao)) : ?>
+                        <span class="erro">
+                            <?php echo $erros_validacao['anexo']; ?>
+                        </span>
+                    <?php endif; ?>
+
+                    <input type="file" name="anexo" />
+                </label>
+
+                <input type="submit" value="cadastrar">
+
+            </fieldset>
+        </form>
 
     </div>
 </body>
